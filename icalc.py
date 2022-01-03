@@ -4,6 +4,7 @@ import cmd, sys, os
 import re
 # TODO: A command to store a variable permanently ie. to disk
 
+VERSION = '0.1'
 
 # Linux:
 MOD_DIR = [ "~/.local/share/icalc/mods/", "mods" ]
@@ -136,12 +137,33 @@ class ICalc(cmd.Cmd):
     def close(self):
         return True
 
+import argparse
+
+class CapitalisedHelpFormatter(argparse.HelpFormatter):
+    def add_usage(self, usage, actions, groups, prefix=None):
+        if prefix is None:
+            prefix = 'Usage: '
+        return super(CapitalisedHelpFormatter, self).add_usage(
+            usage, actions, groups, prefix)
+
+
 if __name__ == "__main__":
     # os.system("mkfifo /tmp/icalc-socket")
     # for arg in sys.argv[1]:
     #     if arg == "-d":
     #         f = open("/tmp/icalc-socket", r)
     #         sys.stdin == f
+
+    
+    parser = argparse.ArgumentParser(add_help=False, formatter_class=CapitalisedHelpFormatter)
+    parser._positionals.title = 'Positional arguments'
+    parser._optionals.title = 'Optional arguments'
+    parser.add_argument('-v', '--version', action='version',
+                        version=f"%(prog)s {VERSION}", help="Show program's version number and exit.")
+    parser.add_argument('-h', '--help', action='help', default=argparse.SUPPRESS,
+                        help='Show this help message and exit.')
+
+    parser.parse_args(sys.argv)
 
     ICalc().cmdloop()
 
