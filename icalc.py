@@ -162,8 +162,10 @@ if __name__ == "__main__":
                         version=f"%(prog)s {VERSION}", help="Show program's version number and exit.")
     parser.add_argument('-h', '--help', action='help', default=argparse.SUPPRESS,
                         help='Show this help message and exit.')
+    # parser.add_argument('-c', action='help',
+    #                     help='Show this help message and exit.')
 
-    parser.parse_args(sys.argv)
+    parser.parse_args()
 
     ICalc().cmdloop()
 
