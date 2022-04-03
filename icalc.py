@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python3.9
 
 import cmd, sys, os
 import re
@@ -6,8 +6,9 @@ import re
 
 VERSION = '0.1'
 
-# Linux:
-MOD_DIR = [ "~/.local/share/icalc/mods/", "mods" ]
+# Linux: 
+# TODO: using ~ is less reliable then $HOME
+MOD_DIR = [ f"{os.environ.get('HOME')}/.local/share/icalc/mods/", "mods" ]
 sys.path.extend(MOD_DIR)
 
 def valid_name(arg):
