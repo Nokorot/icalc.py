@@ -63,8 +63,10 @@ def plot(state, args):
         ls = line_style[i] if i < len(line_style) else {};
         plt.plot(x, state.eval(exp, {'x': x}), **ls);
     
-    plt.show()
-    # plt.savefig('tmp/plot.png');
+    # TODO: This has to be an option
+    # plt.show()
+    plt.savefig('/tmp/plot.png');
+    show(None, None);
 
 def splot(state, args):
     exprs = ' '.join(args).split(',');
@@ -83,8 +85,9 @@ def splot(state, args):
         ls = line_style[i] if i < len(line_style) else {};
         ax.plot_surface(x, y, state.eval(exp, {'x': x, 'y':y, 'r':r, 'theta':theta}), cmap='viridis');
 
-    plt.show()
-    # plt.savefig('tmp/splot.png');
+    # plt.show()
+    plt.savefig('/tmp/plot.png');
+    show(None, None);
 
 def implot(state, args):
     exprs = ' '.join(args).split(',');
@@ -105,8 +108,14 @@ def implot(state, args):
         ls = dict([(k+'s',v) for (k,v) in ls.items()]);
         plt.contour(x,y, state.eval(exp.replace('=','-',1), {'x': x, 'y':y}), [0], **ls);
     
-    plt.show()
-    # plt.savefig('tmp/implot.png');
+    # plt.show()
+    plt.savefig('/tmp/plot.png');
+    show(None, None);
+
+import os
+def show(state, args):
+    os.system("/root/.wbin/vimage.exe /tmp/plot.png")
+#     os.
 
 module = { 
         # Idea:
@@ -119,6 +128,7 @@ module = {
         "yrange": yrange,
     },
     "lazy_fns": {
+        "show":   show,
         "plot":   plot,
         "splot":  splot,
         "implot": implot,
